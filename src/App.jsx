@@ -2,7 +2,14 @@ import { CORE_CONCEPTS } from "./date.js";
 import Header from "./components/Header/Header.jsx";
 import CoreConcept from "./components/CoreConcept/CoreConsept.jsx";
 import TabButton from "./components/TabButton.jsx";
+import { useState } from "react";
+import { EXAMPLES } from "./date.js";
 function App() {
+  const [selectedItem, setSelectedItem] = useState("components");
+  function handleSelect(selectedButton) {
+    setSelectedItem(selectedButton);
+    console.log(selectedButton);
+  }
   return (
     <div>
       <Header />
@@ -23,12 +30,22 @@ function App() {
         <section id="examples">
           <h2>Examples</h2>
           <menu>
-            <TabButton>Components</TabButton>
-            <TabButton>Jsx</TabButton>
-            <TabButton>Props</TabButton>
-            <TabButton>State</TabButton>
+            <TabButton onSelect={() => handleSelect("components")}>
+              Components
+            </TabButton>
+            <TabButton onSelect={() => handleSelect("jsx")}>Jsx</TabButton>
+            <TabButton onSelect={() => handleSelect("props")}>Props</TabButton>
+            <TabButton onSelect={() => handleSelect("state")}>State</TabButton>
           </menu>
+          {selectedItem}
         </section>
+        <div id="tab-content">
+          <h3>{EXAMPLES[selectedItem].title}</h3>
+          <p>{EXAMPLES[selectedItem].description}</p>
+          <pre>
+            <code>{EXAMPLES[selectedItem].code}</code>
+          </pre>
+        </div>
       </main>
     </div>
   );
